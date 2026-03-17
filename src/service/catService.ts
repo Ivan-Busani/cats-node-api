@@ -2,7 +2,7 @@ import * as repo from '../repository/catRepository';
 import type { Cat, SaveCatInput } from '../types/cat';
 import type { AppError } from '../types/errors';
 
-const DUPLICATE_ERROR_CODE = '23505';
+const DUPLICATE_ERROR_CODE = 'P2002';
 
 function throwAppError(status: number, detail: string): never {
   const error: AppError = { status, detail };

@@ -5,7 +5,7 @@ export interface Cat {
   width: number;
   height: number;
   breeds: unknown;
-  api_used?: string;
+  api_used?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
 }

@@ -1,6 +1,6 @@
-const { Router } = require('express');
-const catHandler = require('../handler/catHandler');
-const healthHandler = require('../handler/healthHandler');
+import { Router } from 'express';
+import * as catHandler from '../handler/catHandler';
+import * as healthHandler from '../handler/healthHandler';
 
 const router = Router();
 
@@ -13,4 +13,4 @@ router.post('/api/v1/cats/save', catHandler.saveCat);
 router.put('/api/v1/cats/update/:id', catHandler.updateCat);
 router.delete('/api/v1/cats/delete/:id', catHandler.deleteCat);
 
-module.exports = router;
+export default router;

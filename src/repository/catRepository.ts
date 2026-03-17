@@ -1,13 +1,14 @@
-const pool = require('../config/database');
+import pool from '../config/database';
+import { Cat, SaveCatInput } from '../types/cat';
 
-async function findAll() {
+export async function findAll(): Promise<Cat[]> {
   const result = await pool.query(
     'SELECT * FROM cats ORDER BY id DESC'
   );
   return result.rows;
 }
 
-async function findById(id) {
+export async function findById(id: number): Promise<Cat | null> {
   const result = await pool.query(
     'SELECT * FROM cats WHERE id = $1',
     [id]
@@ -15,7 +16,7 @@ async function findById(id) {
   return result.rows[0] || null;
 }
 
-async function findByCatId(catId) {
+export async function findByCatId(catId: string): Promise<Cat | null> {
   const result = await pool.query(
     'SELECT * FROM cats WHERE cat_id = $1',
     [catId]
@@ -23,7 +24,7 @@ async function findByCatId(catId) {
   return result.rows[0] || null;
 }
 
-async function save(cat) {
+export async function save(cat: SaveCatInput): Promise<Cat> {
   const { cat_id, url, width, height, breeds } = cat;
   const result = await pool.query(
     `INSERT INTO cats (cat_id, url, width, height, breeds, api_used, created_at, updated_at)
@@ -34,7 +35,7 @@ async function save(cat) {
   return result.rows[0];
 }
 
-async function update(id, cat) {
+export async function update(id: number, cat: SaveCatInput): Promise<Cat | null> {
   const { cat_id, url, width, height, breeds } = cat;
   const result = await pool.query(
     `UPDATE cats
@@ -46,12 +47,10 @@ async function update(id, cat) {
   return result.rows[0] || null;
 }
 
-async function remove(id) {
+export async function remove(id: number): Promise<Cat | null> {
   const result = await pool.query(
     'DELETE FROM cats WHERE id = $1 RETURNING id',
     [id]
   );
   return result.rows[0] || null;
 }
-
-module.exports = { findAll, findById, findByCatId, save, update, remove };

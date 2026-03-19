@@ -65,7 +65,7 @@ export async function update(id: number, cat: SaveCatInput): Promise<Cat | null>
   const { cat_id, url, width, height, breeds } = cat;
   try {
     const row = await prisma.cat.update({
-      where: { id: Number(id) },
+      where: { id: BigInt(id) },
       data: {
         cat_id,
         url,
@@ -87,7 +87,7 @@ export async function update(id: number, cat: SaveCatInput): Promise<Cat | null>
 export async function remove(id: number): Promise<Cat | null> {
   try {
     const row = await prisma.cat.delete({
-      where: { id: Number(id) }
+      where: { id: BigInt(id) }
     });
     return { id: Number(row.id)} as Cat;
   } catch (err: unknown) {

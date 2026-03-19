@@ -3,12 +3,22 @@
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
+function getDatabaseUrl(): string {
+  try {
+    // Get the DATABASE_URL from the environment variables
+    return env("DATABASE_URL");
+  } catch {
+    // Dummy DATABASE_URL for prisma generate (doesn't connect during build)
+    return "postgresql://build:build@localhost:5432/build";
+  }
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: env["DATABASE_URL"],
+    url: getDatabaseUrl(),
   },
 });
